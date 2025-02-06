@@ -1,0 +1,11 @@
+
+- name: Undo Version
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Remove commit hash from {{ ansible_env.HOME }}/.bashrc
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc"
+        regexp: 'export INFRA_UBUNTU_REV=.*$'
+        state: absent
+

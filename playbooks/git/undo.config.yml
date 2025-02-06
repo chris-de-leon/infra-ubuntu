@@ -1,0 +1,9 @@
+- name: Undo Git Configs
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Ensure .gitconfig file is deleted
+      file:
+        path: "{{ ansible_env.HOME }}/.gitconfig"
+        state: absent
+

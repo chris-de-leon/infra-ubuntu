@@ -1,0 +1,20 @@
+- name: Init bashrc
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Add ubctl function to {{ ansible_env.HOME }}/.bashrc
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc"
+        line: 'ubctl() { URL="https://github.com/chris-de-leon/infra-ubuntu?rev=$INFRA_UBUNTU_REV"; nix build --no-link "$URL"#ubctl && "$(nix eval --raw "$URL"#ubctl.outPath)/bin/ubctl" "$@"; }'
+        regexp: '^ubctl\(\) \{.*\}$'
+        create: yes
+        state: present
+
+    - name: Add Starship to {{ ansible_env.HOME }}/.bashrc
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc"
+        line: 'if command -v starship &> /dev/null; then eval "$(starship init bash)"; fi'
+        regexp: '^if command -v starship .*; then eval.*$'
+        create: yes
+        state: present
+
