@@ -40,9 +40,9 @@
 
 1. If you'd like to revert all install steps, then you can run:
 
-```sh
-nix run "https://github.com/chris-de-leon/infra-ubuntu?rev=$INFRA_UBUNTU_REV"#ubvm undo
-```
+    ```sh
+    nix run "https://github.com/chris-de-leon/infra-ubuntu?rev=$INFRA_UBUNTU_REV"#ubvm undo
+    ```
 
 ## Usage
 
