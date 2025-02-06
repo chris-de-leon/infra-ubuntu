@@ -35,13 +35,13 @@
 1. Install tools, setup configs, etc.:
 
     ```sh
-    nix run "https://github.com/chris-de-leon/infra-ubuntu?rev=$INFRA_UBUNTU_REV"#ubvm init
+    nix run "git+https://github.com/chris-de-leon/infra-ubuntu?rev=$INFRA_UBUNTU_REV"#ubvm init
     ```
 
 1. If you'd like to revert all install steps, then you can run:
 
     ```sh
-    nix run "https://github.com/chris-de-leon/infra-ubuntu?rev=$INFRA_UBUNTU_REV"#ubvm undo
+    nix run "git+https://github.com/chris-de-leon/infra-ubuntu?rev=$INFRA_UBUNTU_REV"#ubvm undo
     ```
 
 ## Usage
