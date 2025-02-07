@@ -50,14 +50,10 @@
             ];
             shellHook = ''
               eval "$(starship init bash)"
+              if [ "''\${PWD#/nix/store}" != "$PWD" ]; then
+                cd "''\$HOME"
+              fi
             '';
-          };
-
-          dev = pkgs.mkShell rec {
-            packages = [
-              pkgs.python311Packages.ansible-core
-              pkgs.nodejs
-            ];
           };
         };
 

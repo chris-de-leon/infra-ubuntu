@@ -20,6 +20,7 @@ done
 
 # Define configuration directory
 CONF_DIR="$HOME/.config"
+mkdir -p "$CONF_DIR"
 
 # Create temporary directory and clone the repository
 TEMP_DIR="$(mktemp -d)"

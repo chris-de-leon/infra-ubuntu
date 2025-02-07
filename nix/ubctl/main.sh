@@ -7,6 +7,8 @@ ASSETS_DIR="$(realpath "$SCRIPT_DIR/..")"
 
 op1="${1:-}"
 op2="${2:-}"
+shift 1
+
 case "$op1" in
 welcome)
   echo "Welcome! If you are seeing this message, then you have successfully installed ubctl!"
@@ -19,34 +21,36 @@ welcome)
 "
   ;;
 shell)
-  cd "$ASSETS_DIR" && nix develop --show-trace --no-write-lock-file
+  cd "$ASSETS_DIR" && nix develop --show-trace --no-write-lock-file "$@"
   ;;
 vm)
+  shift 1
   case "$op2" in
   init)
-    "$ASSETS_DIR/cmd/vm/init.sh" "$ASSETS_DIR/playbooks"
+    "$ASSETS_DIR/cmd/vm/init.sh" "$ASSETS_DIR/playbooks" "$@"
     ;;
   reset)
-    "$ASSETS_DIR/cmd/vm/undo.sh" "$ASSETS_DIR/playbooks"
+    "$ASSETS_DIR/cmd/vm/undo.sh" "$ASSETS_DIR/playbooks" "$@"
     ;;
   *)
     echo "Invalid option: $op1 $op2"
-    echo "Usage: $0 $op1 {init|undo}"
+    echo "Usage: $0 $op1 {init|reset}"
     exit 1
     ;;
   esac
   ;;
 dotfiles)
+  shift 1
   case "$op2" in
   pull)
-    "$ASSETS_DIR/cmd/dotfiles/init.sh" -f
+    "$ASSETS_DIR/cmd/dotfiles/init.sh" "$@"
     ;;
   purge)
-    "$ASSETS_DIR/cmd/dotfiles/undo.sh" -f
+    "$ASSETS_DIR/cmd/dotfiles/undo.sh" "$@"
     ;;
   *)
     echo "Invalid option: $op1 $op2"
-    echo "Usage: $0 $op1 {upgrade|remove}"
+    echo "Usage: $0 $op1 {pull|purge}"
     exit 1
     ;;
   esac

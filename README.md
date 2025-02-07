@@ -43,7 +43,8 @@
 1. Setup a new Ubuntu VM with Docker, dev tools (e.g. Starship), and Git:
 
     ```sh
-    ubctl vm init && ~/.bashrc
+    # After running this, you should exit and re-enter the VM
+    ubctl vm init
     ```
 
 1. Pull the latest dotfiles:
