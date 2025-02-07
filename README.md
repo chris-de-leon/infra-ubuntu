@@ -29,7 +29,7 @@
 1. Install the `ubctl` CLI:
 
     ```sh
-    curl -sfL https://raw.githubusercontent.com/chris-de-leon/infra-ubuntu/install.sh | bash
+    curl -sfL https://raw.githubusercontent.com/chris-de-leon/infra-ubuntu/refs/heads/master/install.sh | bash
     ```
 
 1. If you'd like to uninstall the `ubctl` CLI later, then you can run:
@@ -64,7 +64,7 @@
 1. Upgrade the CLI to the latest version:
 
     ```sh
-    curl -sfL https://raw.githubusercontent.com/chris-de-leon/infra-ubuntu/install.sh | bash
+    curl -sfL https://raw.githubusercontent.com/chris-de-leon/infra-ubuntu/refs/heads/master/install.sh | bash
     ```
 
 1. Pull the latest dotfiles:
