@@ -5,63 +5,45 @@ set -eo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname "$0")" >/dev/null 2>&1 && pwd -P)"
 ASSETS_DIR="$(realpath "$SCRIPT_DIR/..")"
 
-INFRA_UBUNTU_HASH="${INFRA_UBUNTU_REV:-}"
-INFRA_UBUNTU_OWNR="chris-de-leon"
-INFRA_UBUNTU_REPO="infra-ubuntu"
-get_rev() {
-  if [ -z "$INFRA_UBUNTU_HASH" ]; then
-    curl -s "https://api.github.com/repos/$INFRA_UBUNTU_OWNR/$INFRA_UBUNTU_REPO/commits/master" | jq -erc '.sha'
-  else
-    echo "$INFRA_UBUNTU_HASH"
-  fi
-}
-
-op1="$1"
+op1="${1:-}"
+op2="${2:-}"
 case "$op1" in
-upgrade)
-  ansible-playbook "$ASSETS_DIR/playbooks/cli/init.yml"
-  ;;
 shell)
-  nix develop "git+https://github.com/$INFRA_UBUNTU_OWNR/$INFRA_UBUNTU_REPO?rev=$(get_rev)"
-  ;;
-rev)
-  get_rev
+  cd "$ASSETS_DIR" && nix develop --show-trace --no-write-lock-file
   ;;
 vm)
-  op2="$2"
   case "$op2" in
   init)
     "$ASSETS_DIR/cmd/vm/init.sh" "$ASSETS_DIR/playbooks"
     ;;
-  undo)
+  reset)
     "$ASSETS_DIR/cmd/vm/undo.sh" "$ASSETS_DIR/playbooks"
     ;;
   *)
     echo "Invalid option: $op1 $op2"
-    echo "Usage: $0 $op1 {upgrade|remove}"
+    echo "Usage: $0 $op1 $op2 {init|undo}"
     exit 1
     ;;
   esac
   ;;
 dotfiles)
-  op2="$2"
   case "$op2" in
-  upgrade)
+  pull)
     "$ASSETS_DIR/cmd/dotfiles/init.sh" -f
     ;;
-  remove)
+  purge)
     "$ASSETS_DIR/cmd/dotfiles/undo.sh" -f
     ;;
   *)
     echo "Invalid option: $op1 $op2"
-    echo "Usage: $0 $op1 {upgrade|remove}"
+    echo "Usage: $0 $op1 $op2 {upgrade|remove}"
     exit 1
     ;;
   esac
   ;;
 *)
   echo "Invalid option: $op1"
-  echo "Usage: $0 {upgrade|shell|rev|dotfiles}"
+  echo "Usage: $0 {shell|vm|dotfiles}"
   exit 1
   ;;
 esac

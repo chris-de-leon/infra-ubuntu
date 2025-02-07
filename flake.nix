@@ -62,16 +62,6 @@
         };
 
         packages = {
-          uninstall = pkgs.callPackage ./nix/uninstall {
-            system = system;
-            pkgs = pkgs;
-          };
-
-          install = pkgs.callPackage ./nix/install {
-            system = system;
-            pkgs = pkgs;
-          };
-
           ubctl = pkgs.callPackage ./nix/ubctl {
             system = system;
             pkgs = pkgs;

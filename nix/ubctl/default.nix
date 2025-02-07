@@ -19,6 +19,7 @@ pkgs.stdenv.mkDerivation rec {
     cp -r $src/nix/ubctl/cmd $out
     cp -r $src/playbooks $out
     cp $src/ansible.cfg $out
+    cp $src/flake.nix $out
 
     cp ${entrypoint}/bin/main $out/bin/${name}
     chmod +x $out/bin/${name}
