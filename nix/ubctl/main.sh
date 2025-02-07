@@ -8,6 +8,16 @@ ASSETS_DIR="$(realpath "$SCRIPT_DIR/..")"
 op1="${1:-}"
 op2="${2:-}"
 case "$op1" in
+welcome)
+  echo "Welcome! If you are seeing this message, then you have successfully installed ubctl!"
+  echo -e "
+'||'  '|' '||''|.     ..|'''.| |''||''| '||'      
+ ||    |   ||   ||  .|'     '     ||     ||       
+ ||    |   ||'''|.  ||            ||     ||       
+ ||    |   ||    || '|.      .    ||     ||       
+  '|..'   .||...|'   ''|....'    .||.   .||.....| 
+"
+  ;;
 shell)
   cd "$ASSETS_DIR" && nix develop --show-trace --no-write-lock-file
   ;;
@@ -21,7 +31,7 @@ vm)
     ;;
   *)
     echo "Invalid option: $op1 $op2"
-    echo "Usage: $0 $op1 $op2 {init|undo}"
+    echo "Usage: $0 $op1 {init|undo}"
     exit 1
     ;;
   esac
@@ -36,7 +46,7 @@ dotfiles)
     ;;
   *)
     echo "Invalid option: $op1 $op2"
-    echo "Usage: $0 $op1 $op2 {upgrade|remove}"
+    echo "Usage: $0 $op1 {upgrade|remove}"
     exit 1
     ;;
   esac
