@@ -9,7 +9,6 @@ if [ -z "$PLAYBOOKS_DIR" ]; then
 fi
 
 ansible-playbook "$PLAYBOOKS_DIR/bashrc/undo.yml"
-ansible-playbook "$PLAYBOOKS_DIR/bashrc/undo.version.yml"
 ansible-playbook "$PLAYBOOKS_DIR/git/undo.credentials.yml"
 ansible-playbook "$PLAYBOOKS_DIR/git/undo.config.yml"
 ansible-playbook "$PLAYBOOKS_DIR/docker/undo.group.yml"

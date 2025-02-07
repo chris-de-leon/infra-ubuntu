@@ -62,7 +62,12 @@
         };
 
         packages = {
-          ubvm = pkgs.callPackage ./nix/ubvm {
+          uninstall = pkgs.callPackage ./nix/uninstall {
+            system = system;
+            pkgs = pkgs;
+          };
+
+          install = pkgs.callPackage ./nix/install {
             system = system;
             pkgs = pkgs;
           };

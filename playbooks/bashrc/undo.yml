@@ -2,12 +2,6 @@
   hosts: localhost
   connection: local
   tasks:
-    - name: Remove ubctl function from {{ ansible_env.HOME }}/.bashrc
-      lineinfile:
-        path: "{{ ansible_env.HOME }}/.bashrc"
-        regexp: '^ubctl\(\) \{.*\}$'
-        state: absent
-
     - name: Remove Starship from {{ ansible_env.HOME }}/.bashrc
       lineinfile:
         path: "{{ ansible_env.HOME }}/.bashrc"

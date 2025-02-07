@@ -10,10 +10,15 @@
       shell: echo '{{ git_response.stdout }}' | jq -erc '.sha'
       register: commit_hash
 
-    - name: Add commit hash to {{ ansible_env.HOME }}/.bashrc
+    - name: Install ubctl
+      shell: nix build "git+https://github.com/chris-de-leon/infra-ubuntu?rev={{ commit_hash }}"#ubctl --print-out-paths
+      register: ubctl_dir
+
+    - name: Add ubctl function to {{ ansible_env.HOME }}/.bashrc
       lineinfile:
         path: "{{ ansible_env.HOME }}/.bashrc"
-        line: 'export INFRA_UBUNTU_REV="{{ commit_hash.stdout }}"'
-        regexp: 'export INFRA_UBUNTU_REV=.*$'
+        line: 'ubctl() { {{ ubctl_dir }}/bin/ubctl "$@"; }'
+        regexp: '^ubctl\(\) \{.*\}$'
         create: yes
         state: present
+

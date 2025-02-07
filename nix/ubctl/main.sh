@@ -19,13 +19,29 @@ get_rev() {
 op1="$1"
 case "$op1" in
 upgrade)
-  "$ASSETS_DIR/cmd/upgrade.sh" "$ASSETS_DIR/playbooks"
+  ansible-playbook "$ASSETS_DIR/playbooks/cli/init.yml"
   ;;
 shell)
-  "$ASSETS_DIR/cmd/shell.sh" "git+https://github.com/$INFRA_UBUNTU_OWNR/$INFRA_UBUNTU_REPO?rev=$(get_rev)"
+  nix develop "git+https://github.com/$INFRA_UBUNTU_OWNR/$INFRA_UBUNTU_REPO?rev=$(get_rev)"
   ;;
 rev)
   get_rev
+  ;;
+vm)
+  op2="$2"
+  case "$op2" in
+  init)
+    "$ASSETS_DIR/cmd/vm/init.sh" "$ASSETS_DIR/playbooks"
+    ;;
+  undo)
+    "$ASSETS_DIR/cmd/vm/undo.sh" "$ASSETS_DIR/playbooks"
+    ;;
+  *)
+    echo "Invalid option: $op1 $op2"
+    echo "Usage: $0 $op1 {upgrade|remove}"
+    exit 1
+    ;;
+  esac
   ;;
 dotfiles)
   op2="$2"
