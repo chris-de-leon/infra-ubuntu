@@ -4,7 +4,7 @@
 }:
 
 pkgs.stdenv.mkDerivation rec {
-  name = "install";
+  pname = "install";
   src = ../../.;
 
   entrypoint = pkgs.writeShellApplication {

@@ -4,7 +4,7 @@
 }:
 
 pkgs.stdenv.mkDerivation rec {
-  name = "uninstall";
+  pname = "uninstall";
   src = ../../.;
 
   entrypoint = pkgs.writeShellApplication {
