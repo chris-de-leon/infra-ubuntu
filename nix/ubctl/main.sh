@@ -5,35 +5,36 @@ set -eo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname "$0")" >/dev/null 2>&1 && pwd -P)"
 ASSETS_DIR="$(realpath "$SCRIPT_DIR/..")"
 
+INFRA_UBUNTU_HASH="${INFRA_UBUNTU_REV:-}"
 INFRA_UBUNTU_OWNR="chris-de-leon"
 INFRA_UBUNTU_REPO="infra-ubuntu"
 get_rev() {
-  if [ -z "$INFRA_UBUNTU_REV" ]; then
+  if [ -z "$INFRA_UBUNTU_HASH" ]; then
     curl -s "https://api.github.com/repos/$INFRA_UBUNTU_OWNR/$INFRA_UBUNTU_REPO/commits/master" | jq -erc '.sha'
   else
-    echo "$INFRA_UBUNTU_REV"
+    echo "$INFRA_UBUNTU_HASH"
   fi
 }
 
 op1="$1"
-op2="$2"
 case "$op1" in
 upgrade)
-  ansible-playbook "$(realpath "$ASSETS_DIR/playbooks/bashrc/init.version.yml")" && . "$HOME/.bashrc"
+  "$ASSETS_DIR/cmd/upgrade.sh" "$ASSETS_DIR/playbooks"
   ;;
 shell)
-  nix develop "https://github.com/$INFRA_UBUNTU_OWNR/$INFRA_UBUNTU_REPO?rev=$(get_rev)"
+  "$ASSETS_DIR/cmd/shell.sh" "https://github.com/$INFRA_UBUNTU_OWNR/$INFRA_UBUNTU_REPO?rev=$(get_rev)"
   ;;
 rev)
   get_rev
   ;;
 dotfiles)
+  op2="$2"
   case "$op2" in
   upgrade)
-    bash "$(realpath "$ASSETS_DIR/scripts/dotfiles/init.sh")" -f
+    "$ASSETS_DIR/cmd/dotfiles/init.sh" -f
     ;;
   remove)
-    bash "$(realpath "$ASSETS_DIR/scripts/dotfiles/undo.sh")" -f
+    "$ASSETS_DIR/cmd/dotfiles/undo.sh" -f
     ;;
   *)
     echo "Invalid option: $op1 $op2"
@@ -44,7 +45,7 @@ dotfiles)
   ;;
 *)
   echo "Invalid option: $op1"
-  echo "Usage: $0 {upgrade|shell|dotfiles}"
+  echo "Usage: $0 {upgrade|shell|rev|dotfiles}"
   exit 1
   ;;
 esac

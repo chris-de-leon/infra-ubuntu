@@ -6,18 +6,21 @@
 pkgs.stdenv.mkDerivation rec {
   name = "ubvm";
   src = ../../.;
-  propagatedBuildInputs = [
-    pkgs.python311Packages.ansible-core
-    pkgs.jq
-  ];
+
+  entrypoint = pkgs.writeShellApplication {
+    name = "main";
+    runtimeInputs = [ pkgs.python311Packages.ansible-core ];
+    text = builtins.readFile ./main.sh;
+  };
+
   buildPhase = ''
     mkdir -p $out/bin
 
+    cp -r $src/nix/ubvm/cmd $out
     cp -r $src/playbooks $out
-    cp -r $src/nix/ubvm $out
     cp $src/ansible.cfg $out
 
-    cp $src/nix/ubvm/main.sh $out/bin/${name}
+    cp ${entrypoint}/bin/main $out/bin/${name}
     chmod +x $out/bin/${name}
   '';
 }
