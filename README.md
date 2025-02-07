@@ -35,7 +35,7 @@
 1. If you'd like to uninstall the `ubctl` CLI later, then you can run:
 
     ```sh
-    sudo rm /usr/bin/local/ubctl
+    sudo rm /usr/bin/local/ubctl && rm -rf ~/.config/ubctl
     ```
 
 ## Usage
