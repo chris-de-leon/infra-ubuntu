@@ -3,6 +3,9 @@
   connection: local
   become: yes
   tasks:
+    - name: Fix broken dependencies
+      command: apt --fix-broken install -y
+
     - name: Update and upgrade apt packages
       apt:
         cache_valid_time: 86400 # One day
