@@ -6,7 +6,7 @@
 pkgs.stdenv.mkDerivation rec {
   name = "ubvm";
   src = ../../.;
-  buildInputs = [
+  propagatedBuildInputs = [
     pkgs.python311Packages.ansible-core
     pkgs.jq
   ];
