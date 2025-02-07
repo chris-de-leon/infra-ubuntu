@@ -3,7 +3,7 @@
   connection: local
   tasks:
     - name: Fetch latest commit hash from GitHub API
-      command: curl -s "https://api.github.com/repos/chris-de-leon/infra-ubuntu/commits/master"
+      shell: curl -s "https://api.github.com/repos/chris-de-leon/infra-ubuntu/commits/master"
       register: git_response
 
     - name: Extract commit hash using jq
