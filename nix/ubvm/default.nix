@@ -22,5 +22,6 @@ pkgs.stdenv.mkDerivation rec {
 
     cp ${entrypoint}/bin/main $out/bin/${name}
     chmod +x $out/bin/${name}
+    chmod -R +x $out/cmd
   '';
 }
