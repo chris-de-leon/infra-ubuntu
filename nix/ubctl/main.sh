@@ -22,7 +22,7 @@ upgrade)
   "$ASSETS_DIR/cmd/upgrade.sh" "$ASSETS_DIR/playbooks"
   ;;
 shell)
-  "$ASSETS_DIR/cmd/shell.sh" "https://github.com/$INFRA_UBUNTU_OWNR/$INFRA_UBUNTU_REPO?rev=$(get_rev)"
+  "$ASSETS_DIR/cmd/shell.sh" "git+https://github.com/$INFRA_UBUNTU_OWNR/$INFRA_UBUNTU_REPO?rev=$(get_rev)"
   ;;
 rev)
   get_rev

@@ -5,7 +5,7 @@
     - name: Add ubctl function to {{ ansible_env.HOME }}/.bashrc
       lineinfile:
         path: "{{ ansible_env.HOME }}/.bashrc"
-        line: 'ubctl() { URL="https://github.com/chris-de-leon/infra-ubuntu?rev=$INFRA_UBUNTU_REV"; nix build --no-link "$URL"#ubctl && "$(nix eval --raw "$URL"#ubctl.outPath)/bin/ubctl" "$@"; }'
+        line: 'ubctl() { URL="git+https://github.com/chris-de-leon/infra-ubuntu?rev=$INFRA_UBUNTU_REV"; nix build --no-link "$URL"#ubctl && "$(nix eval --raw "$URL"#ubctl.outPath)/bin/ubctl" "$@"; }'
         regexp: '^ubctl\(\) \{.*\}$'
         create: yes
         state: present
