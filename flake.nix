@@ -26,7 +26,7 @@
               --set "SHELL" "${pkgs.bashInteractive}/bin/bash" \
               --add-flags "-u" \
               --add-flags "-f" \
-              --add-flags "\$HOME/.config/tmux/tmux.conf"
+              --add-flags "''\$HOME/.config/tmux/tmux.conf"
           '';
         };
 
