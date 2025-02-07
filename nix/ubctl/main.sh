@@ -4,6 +4,10 @@ set -eo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname "$0")" >/dev/null 2>&1 && pwd -P)"
 ASSETS_DIR="$(realpath "$SCRIPT_DIR/..")"
+CONFIG_DIR="$HOME/.config/ubctl"
+NIX_DEV_SH="$CONFIG_DIR/devsh"
+
+mkdir -p "$CONFIG_DIR"
 
 op1="${1:-}"
 op2="${2:-}"
@@ -20,7 +24,8 @@ welcome)
 "
   ;;
 shell)
-  cd "$ASSETS_DIR" && nix develop --show-trace --no-write-lock-file "${@:2}"
+  (cd "$ASSETS_DIR" && nix develop --show-trace --no-write-lock-file --profile "$NIX_DEV_SH" --command bash -c "")
+  nix develop --show-trace --no-write-lock-file "$NIX_DEV_SH" "${@:2}"
   ;;
 vm)
   case "$op2" in

@@ -48,9 +48,6 @@
             ];
             shellHook = ''
               eval "$(starship init bash)"
-              if [ "''\${PWD#/nix/store}" != "$PWD" ]; then
-                cd "''\$HOME"
-              fi
             '';
           };
         };
