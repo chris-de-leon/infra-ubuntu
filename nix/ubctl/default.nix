@@ -4,7 +4,7 @@
 }:
 
 pkgs.stdenv.mkDerivation rec {
-  pname = "ubctl";
+  name = "ubctl";
   src = ../../.;
 
   entrypoint = pkgs.writeShellApplication {
