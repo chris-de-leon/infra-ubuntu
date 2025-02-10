@@ -46,6 +46,7 @@ tag:
 .PHONY: release.local
 release.local:
 	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
 		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
 		SKIP_GITHUB="true" \
 		SKIP_DOCKER="true" \
@@ -57,6 +58,7 @@ release.local:
 .PHONY: release.github.strict
 release.github.strict: tag
 	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
 		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
 		SKIP_GITHUB="false" \
 		SKIP_DOCKER="true" \
@@ -68,6 +70,7 @@ release.github.strict: tag
 .PHONY: release.github
 release.github: tag
 	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
 		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
 		SKIP_GITHUB="false" \
 		SKIP_DOCKER="true" \
@@ -79,6 +82,7 @@ release.github: tag
 .PHONY: release.docker.strict
 release.docker.strict: tag
 	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
 		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
 		SKIP_GITHUB="true" \
 		SKIP_DOCKER="false" \
@@ -89,6 +93,7 @@ release.docker.strict: tag
 .PHONY: release.docker
 release.docker: tag
 	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
 		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
 		SKIP_GITHUB="true" \
 		SKIP_DOCKER="false" \
@@ -100,6 +105,7 @@ release.docker: tag
 .PHONY: release.all.strict
 release.all.strict: tag
 	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
 		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
 		SKIP_GITHUB="false" \
 		SKIP_DOCKER="false" \
@@ -110,6 +116,7 @@ release.all.strict: tag
 .PHONY: release.all
 release.all: tag
 	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
 		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
 		SKIP_GITHUB="false" \
 		SKIP_DOCKER="false" \
