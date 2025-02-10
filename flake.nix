@@ -20,6 +20,7 @@
               pkgs.ansible
               pkgs.nodejs
               pkgs.go
+              pkgs.gh
             ];
           };
         };

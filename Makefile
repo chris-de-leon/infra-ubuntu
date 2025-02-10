@@ -1,6 +1,11 @@
 CLI_ARCHIVE_NAME="ubctl"
 SHELL = /bin/bash -e
 
+.PHONY: secrets
+secrets:
+	gh secret set DOCKERHUB_USERNAME --body "$$DOCKERHUB_USERNAME"
+	gh secret set DOCKERHUB_PASSWORD --body "$$DOCKERHUB_PASSWORD"
+
 .PHONY: version
 version:
 	@nix run .#ubctl version
@@ -38,31 +43,10 @@ build:
 tag:
 	@git tag -f "$$(go run ./src/main.go version)"
 
-.PHONY: release.github
-release.github: tag
-	@\
-		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
-		SKIP_GITHUB="false" \
-		SKIP_DOCKER="true" \
-		goreleaser release \
-			--skip=validate,docker \
-			--verbose \
-			--clean
-
-.PHONY: release.docker
-release.docker: tag
-	@\
-		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
-		SKIP_GITHUB="true" \
-		SKIP_DOCKER="false" \
-		goreleaser release \
-			--skip=validate \
-			--verbose \
-			--clean
-
 .PHONY: release.local
 release.local:
 	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
 		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
 		SKIP_GITHUB="true" \
 		SKIP_DOCKER="true" \
@@ -71,9 +55,57 @@ release.local:
 			--verbose \
 			--clean
 
+.PHONY: release.github.strict
+release.github.strict: tag
+	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
+		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
+		SKIP_GITHUB="false" \
+		SKIP_DOCKER="true" \
+		goreleaser release \
+			--skip=docker \
+			--verbose \
+			--clean
+
+.PHONY: release.github
+release.github: tag
+	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
+		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
+		SKIP_GITHUB="false" \
+		SKIP_DOCKER="true" \
+		goreleaser release \
+			--skip=validate,docker \
+			--verbose \
+			--clean
+
+.PHONY: release.docker.strict
+release.docker.strict: tag
+	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
+		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
+		SKIP_GITHUB="true" \
+		SKIP_DOCKER="false" \
+		goreleaser release \
+			--verbose \
+			--clean
+
+.PHONY: release.docker
+release.docker: tag
+	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
+		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
+		SKIP_GITHUB="true" \
+		SKIP_DOCKER="false" \
+		goreleaser release \
+			--skip=validate \
+			--verbose \
+			--clean
+
 .PHONY: release.all.strict
 release.all.strict: tag
 	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
 		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
 		SKIP_GITHUB="false" \
 		SKIP_DOCKER="false" \
@@ -84,6 +116,7 @@ release.all.strict: tag
 .PHONY: release.all
 release.all: tag
 	@\
+		DOCKERHUB_USERNAME="$$DOCKERHUB_USERNAME" \
 		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
 		SKIP_GITHUB="false" \
 		SKIP_DOCKER="false" \
