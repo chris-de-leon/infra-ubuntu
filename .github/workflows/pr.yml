@@ -1,0 +1,22 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: "actions/checkout@v4"
+
+      - name: Install Nix
+        uses: "cachix/install-nix-action@v17"
+
+      - name: Verify Build
+        run: nix develop .#dev --command 'make build'
+
+      - name: Verify Hash
+        run: nix develop .#dev --command 'make version'
