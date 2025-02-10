@@ -37,8 +37,13 @@ func init() {
 	}
 }
 
-func WriteDir(dst string, data embed.FS) error {
-	return fs.WalkDir(data, ".", func(path string, entry fs.DirEntry, err error) error {
+func WriteDir(src string, dst string, data embed.FS) error {
+	dir, err := fs.Sub(data, src)
+	if err != nil {
+		return err
+	}
+
+	return fs.WalkDir(dir, ".", func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -49,11 +54,11 @@ func WriteDir(dst string, data embed.FS) error {
 				return err
 			}
 		} else {
-			data, err := data.ReadFile(path)
+			item, err := data.ReadFile(filepath.Join(src, path))
 			if err != nil {
 				return err
 			}
-			if err := os.WriteFile(target, data, os.ModePerm); err != nil {
+			if err := os.WriteFile(target, item, os.ModePerm); err != nil {
 				return err
 			}
 		}
