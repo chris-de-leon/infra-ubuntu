@@ -25,4 +25,4 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Verify Release
-        run: nix develop .#dev --command bash -c 'make release.local'
+        run: nix develop .#dev --command bash -c 'DOCKERHUB_USERNAME="${{ secrets.DOCKERHUB_USERNAME }}" make release.local'
