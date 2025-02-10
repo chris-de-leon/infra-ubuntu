@@ -35,7 +35,7 @@
 1. If you'd like to uninstall the `ubctl` CLI later, then you can run:
 
     ```sh
-    sudo rm /usr/bin/local/ubctl && rm -rf ~/.config/ubctl
+    ubctl clean && sudo rm /usr/bin/local/ubctl
     ```
 
 ## Usage
@@ -50,7 +50,7 @@
 1. Pull the latest dotfiles:
 
     ```sh
-    ubctl dotfiles pull
+    ubctl dotfiles undo && ubctl dotfiles init
     ```
 
 1. Enter a fully-configured dev shell:
@@ -71,5 +71,5 @@
 1. Pull the latest dotfiles:
 
     ```sh
-    ubctl dotfiles pull
+    ubctl dotfiles undo && ubctl dotfiles init
     ```

@@ -14,20 +14,10 @@
         formatter = pkgs.nixpkgs-fmt;
 
         devShells = {
-          dev = pkgs.mkShell rec {
+          default = pkgs.mkShell rec {
             packages = [
-              pkgs.goreleaser
               pkgs.ansible
-              pkgs.nodejs
-              pkgs.go
             ];
-          };
-        };
-
-        packages = {
-          ubctl = pkgs.callPackage ./default.nix {
-            system = system;
-            pkgs = pkgs;
           };
         };
       }

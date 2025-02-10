@@ -1,0 +1,76 @@
+# This is an example .goreleaser.yml file with some sensible defaults.
+# Make sure to check the documentation at https://goreleaser.com
+
+# The lines below are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/need to use them.
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: "cli"
+    main: "./src/main.go"
+    binary: "ubctl"
+    goarch: [amd64, arm64]
+    goos: [linux, darwin]
+    env:
+      - CGO_ENABLED=0
+
+archives:
+  - id: "cli"
+    name_template: "{{ .Env.CLI_ARCHIVE_NAME }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format: "tar.gz"
+    builds:
+      - "cli"
+
+dockers:
+  - id: "cli-amd64"
+    dockerfile: "Dockerfile"
+    skip_push: "{{ .Env.SKIP_DOCKER }}"
+    goarch: amd64
+    use: buildx
+    ids:
+      - "cli"
+    image_templates:
+      - "{{ .Env.DOCKERHUB_USERNAME }}/{{ .ProjectName }}:{{ .Version }}-amd64"
+    build_flag_templates:
+      - "--platform=linux/amd64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+  - id: "cli-arm64"
+    dockerfile: "Dockerfile"
+    skip_push: "{{ .Env.SKIP_DOCKER }}"
+    goarch: arm64
+    use: buildx
+    ids:
+      - "cli"
+    image_templates:
+      - "{{ .Env.DOCKERHUB_USERNAME }}/{{ .ProjectName }}:{{ .Version }}-arm64"
+    build_flag_templates:
+      - "--platform=linux/arm64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+
+docker_manifests:
+  - id: "cli"
+    name_template: "{{ .Env.DOCKERHUB_USERNAME }}/{{ .ProjectName }}:{{ .Version }}"
+    skip_push: "{{ .Env.SKIP_DOCKER }}"
+    image_templates:
+      - "{{ .Env.DOCKERHUB_USERNAME }}/{{ .ProjectName }}:{{ .Version }}-amd64"
+      - "{{ .Env.DOCKERHUB_USERNAME }}/{{ .ProjectName }}:{{ .Version }}-arm64"
+
+release:
+  skip_upload: "{{ .Env.SKIP_GITHUB }}"
+  disable: "{{ .Env.SKIP_GITHUB }}"
+  replace_existing_artifacts: true
+  mode: replace
+
