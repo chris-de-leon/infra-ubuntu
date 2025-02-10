@@ -92,3 +92,7 @@ release.all: tag
 			--verbose \
 			--clean
 
+.PHONY: docker
+docker: release.local
+	@IMG="$$(jq -erc --arg arch "$$(go env GOARCH)" '.[] | select(.type | contains("Docker Image")) | select(.name | contains($$arch)) | .name' ./dist/artifacts.json)" && \
+	  docker run --rm -it --entrypoint /bin/bash "$$IMG"
