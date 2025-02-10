@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  release:
+  verify:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -16,7 +16,7 @@ jobs:
         uses: "cachix/install-nix-action@v17"
 
       - name: Verify Build
-        run: nix develop .#dev --command 'make build'
+        run: nix develop .#dev --command bash -c 'make build'
 
       - name: Verify Hash
-        run: nix develop .#dev --command 'make version'
+        run: nix develop .#dev --command bash -c 'make version'

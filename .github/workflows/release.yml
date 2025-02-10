@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   release:
@@ -16,10 +16,10 @@ jobs:
         uses: "cachix/install-nix-action@v17"
 
       - name: Verify Build
-        run: nix develop .#dev --command 'make build'
+        run: nix develop .#dev --command bash -c 'make build'
 
       - name: Verify Hash
-        run: nix develop .#dev --command 'make version'
+        run: nix develop .#dev --command bash -c 'make version'
 
       - name: Release
-        run: nix develop .#dev --command 'make release.github'
+        run: nix develop .#dev --command bash -c 'make release.github'
