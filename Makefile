@@ -38,6 +38,28 @@ build:
 tag:
 	@git tag -f "$$(go run ./src/main.go version)"
 
+.PHONY: release.local
+release.local:
+	@\
+		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
+		SKIP_GITHUB="true" \
+		SKIP_DOCKER="true" \
+		goreleaser release \
+			--snapshot \
+			--verbose \
+			--clean
+
+.PHONY: release.github.strict
+release.github.strict: tag
+	@\
+		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
+		SKIP_GITHUB="false" \
+		SKIP_DOCKER="true" \
+		goreleaser release \
+			--skip=docker \
+			--verbose \
+			--clean
+
 .PHONY: release.github
 release.github: tag
 	@\
@@ -49,6 +71,16 @@ release.github: tag
 			--verbose \
 			--clean
 
+.PHONY: release.docker.strict
+release.docker.strict: tag
+	@\
+		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
+		SKIP_GITHUB="true" \
+		SKIP_DOCKER="false" \
+		goreleaser release \
+			--verbose \
+			--clean
+
 .PHONY: release.docker
 release.docker: tag
 	@\
@@ -57,17 +89,6 @@ release.docker: tag
 		SKIP_DOCKER="false" \
 		goreleaser release \
 			--skip=validate \
-			--verbose \
-			--clean
-
-.PHONY: release.local
-release.local:
-	@\
-		CLI_ARCHIVE_NAME="$(CLI_ARCHIVE_NAME)" \
-		SKIP_GITHUB="true" \
-		SKIP_DOCKER="true" \
-		goreleaser release \
-			--snapshot \
 			--verbose \
 			--clean
 

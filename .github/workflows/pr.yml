@@ -20,3 +20,6 @@ jobs:
 
       - name: Verify Hash
         run: nix develop .#dev --command bash -c 'make version'
+
+      - name: Verify Release
+        run: nix develop .#dev --command bash -c 'make release.local'
