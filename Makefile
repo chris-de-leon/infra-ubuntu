@@ -1,6 +1,11 @@
 CLI_ARCHIVE_NAME="ubctl"
 SHELL = /bin/bash -e
 
+.PHONY: secrets
+secrets:
+	gh secret set DOCKERHUB_USERNAME --body "$$DOCKERHUB_USERNAME"
+	gh secret set DOCKERHUB_PASSWORD --body "$$DOCKERHUB_PASSWORD"
+
 .PHONY: version
 version:
 	@nix run .#ubctl version

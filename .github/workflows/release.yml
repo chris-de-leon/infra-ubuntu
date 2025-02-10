@@ -21,5 +21,8 @@ jobs:
       - name: Verify Hash
         run: nix develop .#dev --command bash -c 'make version'
 
+      - name: Log into Docker
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
       - name: Release
         run: nix develop .#dev --command bash -c 'make release.github.strict'
