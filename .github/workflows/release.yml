@@ -18,7 +18,7 @@ jobs:
       - name: Install Nix
         uses: "cachix/install-nix-action@v17"
 
-      - name: Verify Build
+      - name: Check Build
         run: nix develop .#dev --command bash -c 'make build'
 
   check-hash:
@@ -30,7 +30,7 @@ jobs:
       - name: Install Nix
         uses: "cachix/install-nix-action@v17"
 
-      - name: Verify Hash
+      - name: Check Hash
         run: nix develop .#dev --command bash -c 'make version'
 
   release:

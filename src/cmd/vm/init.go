@@ -57,10 +57,10 @@ var initCmd = &cli.Command{
 		}
 
 		extraArgs := strings.Join([]string{
-			fmt.Sprintf("uname = %s", ctx.String("gh-username")),
-			fmt.Sprintf("token = %s", ctx.String("gh-token")),
-			fmt.Sprintf("email = %s", ctx.String("gh-email")),
-			fmt.Sprintf("name = %s", ctx.String("gh-name")),
+			fmt.Sprintf("uname=%s", ctx.String("gh-username")),
+			fmt.Sprintf("token=%s", ctx.String("gh-token")),
+			fmt.Sprintf("email=%s", ctx.String("gh-email")),
+			fmt.Sprintf("name=%s", ctx.String("gh-name")),
 		}, " ")
 
 		for i, pb := range playbooks {
@@ -76,7 +76,7 @@ var initCmd = &cli.Command{
 				filepath.Dir(flakePath),
 				"--command",
 				"ansible-playbook",
-				"-e", extraArgs,
+				"-e", fmt.Sprintf("\"%s\"", extraArgs),
 				pbPath,
 			)
 

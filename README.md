@@ -50,7 +50,7 @@
 
    ```sh
    # After running this, you should exit and re-enter the VM
-   ubctl vm init
+   ubctl vm init --gh-username "your-github-username" --gh-token "your-github-token" --gh-email "your.email@mail.com" --gh-name "your-name"
    ```
 
 1. Pull the latest dotfiles:
