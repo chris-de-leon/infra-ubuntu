@@ -25,11 +25,11 @@ var initCmd = &cli.Command{
 			return cli.Exit(err, 1)
 		}
 
-		if _, err := dirs.WriteFile(filepath.Join(dirs.Config, "starship", "starship.toml"), starship); err != nil {
+		if _, err := dirs.WriteFile(filepath.Join(dirs.Config, "tmux", "tmux.conf"), tmux); err != nil {
 			return cli.Exit(err, 1)
 		}
 
-		if _, err := dirs.WriteFile(filepath.Join(dirs.Config, "tmux", "tmux.conf"), tmux); err != nil {
+		if _, err := dirs.WriteFile(filepath.Join(dirs.Config, "starship.toml"), starship); err != nil {
 			return cli.Exit(err, 1)
 		}
 
