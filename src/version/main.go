@@ -3,7 +3,7 @@ package version
 import "fmt"
 
 func WithoutPrefix() string {
-	return "1.0.5"
+	return "1.0.6"
 }
 
 func WithPrefix() string {

@@ -31,7 +31,7 @@ var Commands = &cli.Command{
 		// `nix develop` command. This approach allows us to avoid errors with Nix not "seeing" any
 		// untracked Git files. Also, the second command is needed because the first one will start
 		// a Nix shell inside the config directory rather than the user's CWD.
-		profile := filepath.Join(dirs.AppConfig, "devsh")
+		profile := filepath.Join(shellCacheDir, "devsh")
 		cmds := []*exec.Cmd{
 			exec.Command(
 				"nix",
@@ -53,7 +53,7 @@ var Commands = &cli.Command{
 				fmt.Fprintln(ctx.App.Writer, cmd.String())
 			}
 			if i == 0 {
-				cmd.Dir = dirs.AppConfig
+				cmd.Dir = shellCacheDir
 			}
 
 			cmd.Stdout = os.Stdout
