@@ -35,7 +35,7 @@ jobs:
 
   release:
     runs-on: ubuntu-22.04
-    needs: [verify-build, verify-hash]
+    needs: [check-build, check-hash]
     steps:
       - name: Checkout repository
         uses: "actions/checkout@v4"
