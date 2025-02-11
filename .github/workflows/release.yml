@@ -9,8 +9,35 @@ permissions:
   contents: write # grant permissions to create releases
 
 jobs:
-  setup:
+  verify-build:
     runs-on: ubuntu-22.04
+    needs: setup
+    steps:
+      - name: Checkout repository
+        uses: "actions/checkout@v4"
+
+      - name: Install Nix
+        uses: "cachix/install-nix-action@v17"
+
+      - name: Verify Build
+        run: nix develop .#dev --command bash -c 'make build'
+
+  verify-hash:
+    runs-on: ubuntu-22.04
+    needs: setup
+    steps:
+      - name: Checkout repository
+        uses: "actions/checkout@v4"
+
+      - name: Install Nix
+        uses: "cachix/install-nix-action@v17"
+
+      - name: Verify Hash
+        run: nix develop .#dev --command bash -c 'make version'
+
+  verify-release:
+    runs-on: ubuntu-22.04
+    needs: [verify-build, verify-hash]
     steps:
       - name: Checkout repository
         uses: "actions/checkout@v4"
@@ -26,33 +53,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-  verify-build:
-    runs-on: ubuntu-22.04
-    needs: setup
-    steps:
-      - name: Checkout repository
-        uses: "actions/checkout@v4"
-
-      - name: Verify Build
-        run: nix develop .#dev --command bash -c 'make build'
-
-  verify-hash:
-    runs-on: ubuntu-22.04
-    needs: setup
-    steps:
-      - name: Checkout repository
-        uses: "actions/checkout@v4"
-
-      - name: Verify Hash
-        run: nix develop .#dev --command bash -c 'make version'
-
-  verify-release:
-    runs-on: ubuntu-22.04
-    needs: [verify-build, verify-hash]
-    steps:
-      - name: Checkout repository
-        uses: "actions/checkout@v4"
 
       - name: Release
         run: nix develop .#dev --command bash -c 'DOCKERHUB_USERNAME="${{ secrets.DOCKERHUB_USERNAME }}" GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}" make release.github.strict'
