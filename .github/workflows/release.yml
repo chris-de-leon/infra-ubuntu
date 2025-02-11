@@ -11,33 +11,6 @@ permissions:
 jobs:
   verify-build:
     runs-on: ubuntu-22.04
-    needs: setup
-    steps:
-      - name: Checkout repository
-        uses: "actions/checkout@v4"
-
-      - name: Install Nix
-        uses: "cachix/install-nix-action@v17"
-
-      - name: Verify Build
-        run: nix develop .#dev --command bash -c 'make build'
-
-  verify-hash:
-    runs-on: ubuntu-22.04
-    needs: setup
-    steps:
-      - name: Checkout repository
-        uses: "actions/checkout@v4"
-
-      - name: Install Nix
-        uses: "cachix/install-nix-action@v17"
-
-      - name: Verify Hash
-        run: nix develop .#dev --command bash -c 'make version'
-
-  verify-release:
-    runs-on: ubuntu-22.04
-    needs: [verify-build, verify-hash]
     steps:
       - name: Checkout repository
         uses: "actions/checkout@v4"
