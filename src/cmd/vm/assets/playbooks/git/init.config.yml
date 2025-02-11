@@ -1,6 +1,9 @@
 - name: Init Git Configs
   hosts: localhost
   connection: local
+  vars:
+    email: "{{ lookup('env', 'GH_EMAIL') }}"
+    name: "{{ lookup('env', 'GH_NAME') }}"
   tasks:
     - name: Set Git user name
       git_config:

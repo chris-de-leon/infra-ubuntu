@@ -12,4 +12,3 @@
         groups: docker
         append: yes
       become: yes
-

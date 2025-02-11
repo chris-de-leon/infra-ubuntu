@@ -6,4 +6,3 @@
       file:
         path: "{{ ansible_env.HOME }}/.gitconfig"
         state: absent
-

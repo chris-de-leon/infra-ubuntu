@@ -6,7 +6,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 	"ubctl/src/dirs"
 
 	"github.com/urfave/cli/v2"
@@ -56,13 +55,6 @@ var initCmd = &cli.Command{
 			playbookBashrcInit,
 		}
 
-		extraArgs := strings.Join([]string{
-			fmt.Sprintf("uname=%s", ctx.String("gh-username")),
-			fmt.Sprintf("token=%s", ctx.String("gh-token")),
-			fmt.Sprintf("email=%s", ctx.String("gh-email")),
-			fmt.Sprintf("name=%s", ctx.String("gh-name")),
-		}, " ")
-
 		for i, pb := range playbooks {
 			pbPath, err := dirs.WriteFile(filepath.Join(vmCacheDir, "playbooks", fmt.Sprintf("%d.yml", i)), pb)
 			if err != nil {
@@ -76,8 +68,17 @@ var initCmd = &cli.Command{
 				filepath.Dir(flakePath),
 				"--command",
 				"ansible-playbook",
-				"-e", fmt.Sprintf("\"%s\"", extraArgs),
 				pbPath,
+			)
+
+			cmd.Env = append(
+				os.Environ(),
+				[]string{
+					fmt.Sprintf("GH_UNAME=%s", ctx.String("gh-username")),
+					fmt.Sprintf("GH_TOKEN=%s", ctx.String("gh-token")),
+					fmt.Sprintf("GH_EMAIL=%s", ctx.String("gh-email")),
+					fmt.Sprintf("GH_NAME=%s", ctx.String("gh-name")),
+				}...,
 			)
 
 			cmd.Stdout = os.Stdout
