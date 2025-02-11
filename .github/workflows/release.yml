@@ -9,7 +9,7 @@ permissions:
   contents: write # grant permissions to create releases
 
 jobs:
-  verify-build:
+  check-build:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -21,7 +21,7 @@ jobs:
       - name: Verify Build
         run: nix develop .#dev --command bash -c 'make build'
 
-  verify-hash:
+  check-hash:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -33,7 +33,7 @@ jobs:
       - name: Verify Hash
         run: nix develop .#dev --command bash -c 'make version'
 
-  verify-release:
+  release:
     runs-on: ubuntu-22.04
     needs: [verify-build, verify-hash]
     steps:
