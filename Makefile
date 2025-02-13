@@ -18,6 +18,14 @@ nixdev:
 nixfmt:
 	@nix fmt
 
+.PHONY: dotfiles
+dotfiles:
+	rm -rf ./src/lib/ansible/assets/dotfiles
+	mkdir -p ./src/lib/ansible/assets/dotfiles/starship
+	cp -r "$$HOME/.config/starship.toml" ./src/lib/ansible/assets/dotfiles/starship/starship.toml
+	cp -r "$$HOME/.config/nvim" ./src/lib/ansible/assets/dotfiles
+	cp -r "$$HOME/.config/tmux" ./src/lib/ansible/assets/dotfiles
+
 .PHONY: upgrade
 upgrade:
 	@go get -x -v -u ./... && make tidy

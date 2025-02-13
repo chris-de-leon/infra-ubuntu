@@ -37,7 +37,9 @@ Before starting, you'll need to create a Github [fine-grained personal access to
    multipass shell dev
    ```
 
-### Inside the VM
+## Installing
+
+Once you're inside the VM, follow the steps below:
 
 1. Install Nix:
 
@@ -51,22 +53,14 @@ Before starting, you'll need to create a Github [fine-grained personal access to
    curl -sfL https://raw.githubusercontent.com/chris-de-leon/infra-ubuntu/refs/heads/master/install.sh | bash
    ```
 
-1. If you'd like to uninstall the `ubctl` CLI later, then you can run:
-
-   ```sh
-   ubctl clean && sudo rm /usr/bin/local/ubctl && nix-collect-garbage
-   ```
-
-## Usage
-
-1. You can setup a new VM for development using the command below:
+1. Initialize the VM using the command below:
 
    ```sh
    # After running this, you should exit and re-enter the VM
    ubctl vm init --gh-username "your-github-username" --gh-token "your-github-token" --gh-email "your.email@mail.com" --gh-name "your-name"
    ```
 
-1. Once the VM is setup, you can enter a fully-configured dev shell:
+1. Once the VM is initialized, you can enter a fully-configured dev shell:
 
    ```sh
    ubctl shell
@@ -91,4 +85,30 @@ Before starting, you'll need to create a Github [fine-grained personal access to
    ```sh
    # After running this, you should exit and re-enter the VM
    ubctl vm init --gh-username "your-github-username" --gh-token "your-github-token" --gh-email "your.email@mail.com" --gh-name "your-name"
+   ```
+
+## Uninstalling
+
+1. Revert the VM back to its original state:
+
+   ```sh
+   ubctl vm undo
+   ```
+
+1. Clean up all artifacts created by the CLI:
+
+   ```sh
+   ubctl clean
+   ```
+
+1. Remove the executable:
+
+   ```sh
+   sudo rm /usr/bin/local/ubctl
+   ```
+
+1. Uninstall Nix:
+
+   ```sh
+   /nix/nix-installer uninstall --no-confirm
    ```

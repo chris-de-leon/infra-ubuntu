@@ -1,10 +1,8 @@
 package vm
 
 import (
-	"crypto/md5"
-	"fmt"
 	"os"
-	"ubctl/src/ansible"
+	"ubctl/src/lib/ansible"
 
 	"github.com/urfave/cli/v2"
 )
@@ -25,8 +23,7 @@ var runCmd = &cli.Command{
 			return cli.Exit(err, 1)
 		}
 
-		name := fmt.Sprintf("%x", md5.Sum(data))
-		if err := ansible.Run(ctx.Context, name, data, args); err != nil {
+		if err := ansible.Run(ctx.Context, data, args); err != nil {
 			return cli.Exit(err, 1)
 		}
 

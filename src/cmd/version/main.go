@@ -2,7 +2,7 @@ package version
 
 import (
 	"fmt"
-	"ubctl/src/version"
+	"ubctl/src/lib/version"
 
 	"github.com/urfave/cli/v2"
 )

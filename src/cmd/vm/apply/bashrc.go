@@ -1,7 +1,7 @@
 package apply
 
 import (
-	"ubctl/src/ansible"
+	"ubctl/src/lib/ansible"
 
 	"github.com/urfave/cli/v2"
 )

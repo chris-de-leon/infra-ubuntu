@@ -1,41 +1,11 @@
-package dirs
+package files
 
 import (
 	"embed"
 	"io/fs"
 	"os"
 	"path/filepath"
-	"ubctl/src/version"
 )
-
-const (
-	APPLICATION_DIR = "ubctl"
-)
-
-var (
-	AppConfig string
-	AppCache  string
-	Config    string
-	Cache     string
-)
-
-func init() {
-	var err error
-
-	Config, err = os.UserConfigDir()
-	if err != nil {
-		panic(err)
-	} else {
-		AppConfig = filepath.Join(Config, APPLICATION_DIR, version.WithPrefix())
-	}
-
-	Cache, err = os.UserCacheDir()
-	if err != nil {
-		panic(err)
-	} else {
-		AppCache = filepath.Join(Cache, APPLICATION_DIR, version.WithPrefix())
-	}
-}
 
 func WriteDir(src string, dst string, data embed.FS) error {
 	dir, err := fs.Sub(data, src)
