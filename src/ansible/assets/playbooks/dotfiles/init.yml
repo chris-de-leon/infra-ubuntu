@@ -36,7 +36,7 @@
 
     - name: Ensure TMUX Destination Directory Exists
       file:
-        path: "{{ starship_dst | dirname }}"
+        path: "{{ tmux_dst | dirname }}"
         state: directory
 
     - name: Create TMUX Config
@@ -46,7 +46,7 @@
 
     - name: Ensure NVIM Destination Directory Exists
       file:
-        path: "{{ starship_dst | dirname }}"
+        path: "{{ nvim_dst | dirname }}"
         state: directory
 
     - name: Create NVIM Config
