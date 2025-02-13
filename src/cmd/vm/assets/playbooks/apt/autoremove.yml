@@ -1,7 +1,0 @@
-- name: Clean up unnecessary dependencies
-  hosts: localhost
-  connection: local
-  become: yes
-  tasks:
-    - name: autoremove apt packages
-      command: apt-get autoremove -y
