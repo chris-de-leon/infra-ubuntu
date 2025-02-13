@@ -8,6 +8,10 @@ REPO_NAME="infra-ubuntu"
 
 # Infer OS
 OS="$(uname -s | tr '[:upper:]' '[:lower:]')" # linux / darwin
+if [[ "${OS}" == "darwin" ]]; then
+  echo "error: unsupported OS: ${OS}"
+  exit 1
+fi
 
 # Infer architecture
 ARCH="$(uname -m)"
@@ -16,7 +20,7 @@ if [[ "${ARCH}" == "arm64" ]] || [[ "${ARCH}" == "aarch64" ]]; then
 elif [[ "${ARCH}" == "x86_64" ]]; then
   ARCH="amd64"
 else
-  echo "Unsupported architecture: ${ARCH}"
+  echo "error: unsupported architecture: ${ARCH}"
   exit 1
 fi
 
@@ -55,4 +59,4 @@ sudo chmod +x /usr/local/bin/ubctl
 # Verify installation
 echo "info: verifying installation..."
 VERSION="$(ubctl version)"
-echo "info: successfully downloaded ubctl version $VERSION"
+echo "info: successfully downloaded ubctl version ${VERSION}"
