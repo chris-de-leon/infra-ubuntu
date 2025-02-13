@@ -125,7 +125,9 @@ release.all: tag
 			--verbose \
 			--clean
 
-.PHONY: docker
-docker: release.local
+# NOTE: you can install Nix in the container using the command below:
+# apt update -y && apt upgrade -y && apt install curl -y && curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install linux --extra-conf "sandbox = false" --init none --no-confirm
+.PHONY: sandbox
+sandbox: release.local
 	@IMG="$$(jq -erc --arg arch "$$(go env GOARCH)" '.[] | select(.type | contains("Docker Image")) | select(.name | contains($$arch)) | .name' ./dist/artifacts.json)" && \
 	  docker run --rm -it --entrypoint /bin/bash "$$IMG"

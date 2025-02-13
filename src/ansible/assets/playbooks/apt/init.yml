@@ -1,0 +1,22 @@
+- name: Init APT Packages
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: Fix broken dependencies
+      command: apt --fix-broken install -y
+
+    - name: Update and upgrade apt packages
+      apt:
+        cache_valid_time: 86400 # One day
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install packages
+      apt:
+        update_cache: yes
+        state: present
+        name:
+          # NOTE: This is needed for cross-platform builds with
+          # docker buildx (https://stackoverflow.com/a/76129784)
+          - qemu-user-static

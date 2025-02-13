@@ -1,0 +1,55 @@
+- name: Init Dotfiles
+  hosts: localhost
+  connection: local
+  vars:
+    starship_src: "{{ lookup('env', 'STARSHIP_SRC') }}"
+    starship_dst: "{{ lookup('env', 'STARSHIP_DST') }}"
+    nvim_src: "{{ lookup('env', 'NVIM_SRC') }}"
+    nvim_dst: "{{ lookup('env', 'NVIM_DST') }}"
+    tmux_src: "{{ lookup('env', 'TMUX_SRC') }}"
+    tmux_dst: "{{ lookup('env', 'TMUX_DST') }}"
+  tasks:
+    - name: Remove STARSHIP Config
+      file:
+        path: "{{ starship_dst }}"
+        state: absent
+
+    - name: Remove TMUX Config
+      file:
+        path: "{{ tmux_dst }}"
+        state: absent
+
+    - name: Remove NVIM Config
+      file:
+        path: "{{ nvim_dst }}"
+        state: absent
+
+    - name: Ensure STARSHIP Destination Directory Exists
+      file:
+        path: "{{ starship_dst | dirname }}"
+        state: directory
+
+    - name: Create STARSHIP Config
+      copy:
+        dest: "{{ starship_dst }}"
+        src: "{{ starship_src }}"
+
+    - name: Ensure TMUX Destination Directory Exists
+      file:
+        path: "{{ starship_dst | dirname }}"
+        state: directory
+
+    - name: Create TMUX Config
+      copy:
+        dest: "{{ tmux_dst }}"
+        src: "{{ tmux_src }}"
+
+    - name: Ensure NVIM Destination Directory Exists
+      file:
+        path: "{{ starship_dst | dirname }}"
+        state: directory
+
+    - name: Create NVIM Config
+      copy:
+        dest: "{{ nvim_dst }}/"
+        src: "{{ nvim_src }}/"

@@ -1,4 +1,4 @@
-FROM docker.io/debian:12.8-slim
+FROM docker.io/debian:12.9-slim
 
 COPY /ubctl /usr/local/bin/
 

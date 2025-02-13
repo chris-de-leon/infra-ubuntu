@@ -1,0 +1,14 @@
+- name: Undo APT Packages
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: Uninstall packages
+      apt:
+        state: absent
+        purge: yes
+        name:
+          - qemu-user-static
+
+    - name: autoremove apt packages
+      command: apt-get autoremove -y

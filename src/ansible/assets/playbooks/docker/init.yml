@@ -52,3 +52,13 @@
           - containerd.io
           - docker-buildx-plugin
           - docker-compose-plugin
+
+    - name: Get USER
+      command: echo "$USER"
+      register: user
+
+    - name: Add user to Docker group
+      user:
+        name: "{{ user.stdout }}"
+        groups: docker
+        append: yes

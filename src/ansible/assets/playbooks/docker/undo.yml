@@ -4,6 +4,13 @@
   connection: local
   become: yes
   tasks:
+    - name: Get USER
+      command: echo "$USER"
+      register: user
+
+    - name: Remove user from Docker group
+      command: "deluser {{ user.stdout }} docker"
+
     - name: Purge Docker Engine, CLI, containerd, and Docker Compose packages
       apt:
         name:

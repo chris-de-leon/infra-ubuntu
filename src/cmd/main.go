@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"ubctl/src/cmd/clean"
-	"ubctl/src/cmd/dotfiles"
 	"ubctl/src/cmd/shell"
 	"ubctl/src/cmd/version"
 	"ubctl/src/cmd/vm"
@@ -11,7 +10,6 @@ import (
 )
 
 var Commands = []*cli.Command{
-	dotfiles.Commands,
 	version.Commands,
 	shell.Commands,
 	clean.Commands,
