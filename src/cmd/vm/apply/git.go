@@ -1,7 +1,7 @@
 package apply
 
 import (
-	"ubctl/src/ansible"
+	"ubctl/src/lib/ansible"
 
 	"github.com/urfave/cli/v2"
 )
@@ -16,12 +16,12 @@ var git = &cli.Command{
 		&cli.StringFlag{Name: "gh-name", Required: true},
 	},
 	Action: func(ctx *cli.Context) error {
-		uname := ctx.String("gh-username")
-		token := ctx.String("gh-token")
-		email := ctx.String("gh-email")
-		name := ctx.String("gh-name")
-
-		if err := ansible.GitInit(ctx.Context, uname, token, name, email); err != nil {
+		if err := ansible.GitInit(ctx.Context,
+			ctx.String("gh-username"),
+			ctx.String("gh-token"),
+			ctx.String("gh-name"),
+			ctx.String("gh-email"),
+		); err != nil {
 			return cli.Exit(err, 1)
 		} else {
 			return nil

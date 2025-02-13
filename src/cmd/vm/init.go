@@ -1,7 +1,7 @@
 package vm
 
 import (
-	"ubctl/src/ansible"
+	"ubctl/src/lib/ansible"
 
 	"github.com/urfave/cli/v2"
 )
@@ -32,7 +32,12 @@ var initCmd = &cli.Command{
 			return cli.Exit(err, 1)
 		}
 
-		if err := ansible.GitInit(ctx.Context, ctx.String("gh-username"), ctx.String("gh-token"), ctx.String("gh-name"), ctx.String("gh-email")); err != nil {
+		if err := ansible.GitInit(ctx.Context,
+			ctx.String("gh-username"),
+			ctx.String("gh-token"),
+			ctx.String("gh-name"),
+			ctx.String("gh-email"),
+		); err != nil {
 			return cli.Exit(err, 1)
 		}
 
