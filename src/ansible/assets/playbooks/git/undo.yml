@@ -1,0 +1,13 @@
+- name: Undo Git
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Ensure {{ ansible_env.HOME }}/.gitconfig file is deleted
+      file:
+        path: "{{ ansible_env.HOME }}/.gitconfig"
+        state: absent
+
+    - name: Ensure {{ ansible_env.HOME }}/.git-credentials file is deleted
+      file:
+        path: "{{ ansible_env.HOME }}/.git-credentials"
+        state: absent

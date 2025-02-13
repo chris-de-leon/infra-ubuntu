@@ -1,0 +1,11 @@
+- name: Init bashrc
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Add Starship to {{ ansible_env.HOME }}/.bashrc
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc"
+        line: 'if command -v starship &> /dev/null; then eval "$(starship init bash)"; fi'
+        regexp: "^if command -v starship .*; then eval.*$"
+        create: yes
+        state: present

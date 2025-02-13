@@ -1,0 +1,9 @@
+- name: Undo bashrc
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Remove Starship from {{ ansible_env.HOME }}/.bashrc
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc"
+        regexp: "^if command -v starship .*; then eval.*$"
+        state: absent
