@@ -53,9 +53,10 @@
           - docker-buildx-plugin
           - docker-compose-plugin
 
-    - name: Get USER
-      command: echo "$USER"
+    - name: Get current user
+      command: whoami
       register: user
+      become: no
 
     - name: Add user to Docker group
       user:
