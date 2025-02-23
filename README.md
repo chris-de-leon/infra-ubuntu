@@ -104,7 +104,7 @@ Once you're inside the VM, follow the steps below:
 1. Remove the executable:
 
    ```sh
-   sudo rm /usr/bin/local/ubctl
+   sudo rm /usr/local/bin/ubctl
    ```
 
 1. Uninstall Nix:
