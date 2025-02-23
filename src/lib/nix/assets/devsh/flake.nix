@@ -34,6 +34,7 @@
           # below since ~/.bashrc won't be sourced when we run `nix develop`.
           default = pkgs.mkShell rec {
             packages = [
+              pkgs.bashInteractive
               pkgs.shellcheck
               pkgs.unzipNLS
               pkgs.starship
