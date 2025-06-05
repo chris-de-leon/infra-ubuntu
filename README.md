@@ -1,10 +1,6 @@
 # Infra-Ubuntu
 
-<div>
-  <a href="https://github.com/chris-de-leon/infra-ubuntu/actions">
-  <img src="https://github.com/chris-de-leon/infra-ubuntu/actions/workflows/release.yml/badge.svg"/>
- </a>
-</div>
+⚠️ NOTE: This repo has been archived in favor of [dotfiles](https://github.com/chris-de-leon/dotfiles) ⚠️
 
 ## Setup
 
