@@ -1,6 +1,8 @@
 # Infra-Ubuntu
 
-⚠️ NOTE: This repo has been archived in favor of [dotfiles](https://github.com/chris-de-leon/dotfiles) ⚠️
+## Archive Notice
+
+This repo has been archived in favor of [dotfiles](https://github.com/chris-de-leon/dotfiles)
 
 ## Setup
 
