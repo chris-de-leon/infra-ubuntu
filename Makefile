@@ -1,5 +1,6 @@
+MAKEFLAGS += --no-print-directory
+SHELL = /bin/bash -eo pipefail
 CLI_ARCHIVE_NAME="ubctl"
-SHELL = /bin/bash -e
 
 .PHONY: secrets
 secrets:
@@ -46,6 +47,14 @@ clean:
 .PHONY: build
 build:
 	@goreleaser build --snapshot --verbose --clean
+
+.PHONY: nixupdate
+nixupdate:
+	nix flake update
+
+.PHONY: nixlock
+nixlock:
+	nix flake lock
 
 .PHONY: tag
 tag:
